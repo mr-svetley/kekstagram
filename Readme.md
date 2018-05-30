@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Владислав Есин](https://up.htmlacademy.ru/javascript/14/user/186855).
-* Наставник: `Неизвестно`.
+* Наставник: [Семен Целищев](https://up.htmlacademy.ru/javascript/14/user/396229).
 
 ---
 
