@@ -1,7 +1,7 @@
 'use strict'
 
-let photosData = generatePhotosData();
-let photosLayout = generatePhotosLayout(photosData);
+var photosData = generatePhotosData();
+var photosLayout = generatePhotosLayout(photosData);
 
 // Рендерим превьюшки фотографий
 document.querySelector('.pictures').appendChild(photosLayout);
@@ -15,30 +15,30 @@ openPhotoViewer(photosData[0]);
  * @param {object} Данные фотографии, которые необходимо отобразить
  */
 function openPhotoViewer (photoData) {
-  const photoViever = document.querySelector('.big-picture');
+  var photoViever = document.querySelector('.big-picture');
 
   photoViever.querySelector('.big-picture__img img').src = photoData.url;
   photoViever.querySelector('.comments-count').textContent = photoData.comments.length;
   photoViever.querySelector('.likes-count').textContent = photoData.likes;
   photoViever.querySelector('.social__caption').textContent = photoData.description;
 
-  const commentsList = document.querySelector('.social__comments');
+  var commentsList = document.querySelector('.social__comments');
   commentsList.innerHTML = '';
 
-  const comments = document.createDocumentFragment();
+  var comments = document.createDocumentFragment();
 
   photoData.comments.forEach(function (comment) {
-    const commentLayout = document.createElement('li');
+    var commentLayout = document.createElement('li');
     commentLayout.classList.add('social__comment', 'social__comment--text');
 
-    const commentImg = document.createElement('img');
+    var commentImg = document.createElement('img');
     commentImg.src = 'img/avatar-' + getRandomInteger(6, 1) + '.svg';
     commentImg.classList.add('social__picture');
     commentImg.alt = 'Аватар комментатора фотографии';
     commentImg.width = 35;
     commentImg.height = 35;
 
-    const commentText = document.createElement('p');
+    var commentText = document.createElement('p');
     commentText.classList.add('social__text');
     commentText.textContent = comment;
 
@@ -60,11 +60,11 @@ function openPhotoViewer (photoData) {
  * @returns {documentFragment} Разметка на основе принятых данных
  */
 function generatePhotosLayout (photosData) {
-  const photoTemplate = document.querySelector('#picture').content.querySelector('.picture__link');
-  const photos = document.createDocumentFragment();
+  var photoTemplate = document.querySelector('#picture').content.querySelector('.picture__link');
+  var photos = document.createDocumentFragment();
 
   photosData.forEach(function (photoData) {
-    let photo = photoTemplate.cloneNode(true);
+    var photo = photoTemplate.cloneNode(true);
     photo.querySelector('.picture__img').src = photoData.url;
     photo.querySelector('.picture__stat--comments').textContent = photoData.comments.length;
     photo.querySelector('.picture__stat--likes').textContent = photoData.likes;
@@ -82,7 +82,7 @@ function generatePhotosLayout (photosData) {
  */
 function generatePhotosData (number) {
   number = number || 25;
-  const COMMENTS = [
+  var COMMENTS = [
     'Всё отлично!',
     'В целом всё неплохо. Но не всё.',
     'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -91,7 +91,7 @@ function generatePhotosData (number) {
     'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
   ];
 
-  const DESCRIPTIONS = [
+  var DESCRIPTIONS = [
     'Тестим новую камеру!',
     'Затусили с друзьями на море',
     'Как же круто тут кормят',
