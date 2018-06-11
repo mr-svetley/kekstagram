@@ -3,10 +3,8 @@
 var photosData = generatePhotosData();
 var photosLayout = generatePhotosLayout(photosData);
 
-// Рендерим превьюшки фотографий
 document.querySelector('.pictures').appendChild(photosLayout);
 
-// Открываем окно просмотра с первой фотографией
 openPhotoViewer(photosData[0]);
 
 /**
@@ -31,12 +29,10 @@ function openPhotoViewer(photoData) {
     var commentLayout = document.createElement('li');
     commentLayout.classList.add('social__comment', 'social__comment--text');
 
-    var commentImg = document.createElement('img');
+    var commentImg = new Image(35, 35);
     commentImg.src = 'img/avatar-' + getRandomInteger(6, 1) + '.svg';
     commentImg.classList.add('social__picture');
     commentImg.alt = 'Аватар комментатора фотографии';
-    commentImg.width = 35;
-    commentImg.height = 35;
 
     var commentText = document.createElement('p');
     commentText.classList.add('social__text');
@@ -56,7 +52,7 @@ function openPhotoViewer(photoData) {
 /**
  * Создает html-разметку на основе переданных данных
  *
- * @param {array} currentPhotosData Массив объектов с данными по каждому фото
+ * @param {Object[]} currentPhotosData Массив объектов с данными по каждому фото
  * @return {documentFragment} Разметка на основе принятых данных
  */
 function generatePhotosLayout(currentPhotosData) {
@@ -78,7 +74,7 @@ function generatePhotosLayout(currentPhotosData) {
  * Генерирует массив данных для фото-карточек
  *
  * @param {number} number Количество элементов для генирации
- * @return {array} Массив со сгенерированными объектами
+ * @return {Object[]} Массив со сгенерированными объектами
  */
 function generatePhotosData(number) {
   number = number || 25;
@@ -100,11 +96,11 @@ function generatePhotosData(number) {
     'Вот это тачка!'
   ];
 
-  return Array.from({length: number}, function (_value, index) {
+  return Array.from({length: number}, function (_, index) {
     return {
       url: 'photos/' + (index + 1) + '.jpg',
       likes: getRandomInteger(200, 15),
-      comments: Array.from({length: getRandomInteger(2, 1)}, function (_) {
+      comments: Array.from({length: getRandomInteger(2, 1)}, function (__) {
         return COMMENTS[getRandomInteger(COMMENTS.length - 1)];
       }),
       description: DESCRIPTIONS[getRandomInteger(DESCRIPTIONS.length - 1)]
