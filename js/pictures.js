@@ -120,14 +120,16 @@ photoEditorZoomPlus.addEventListener('click', function () {
 });
 
 function zoomPhoto(type) {
-  var currentZoomValue = parseInt(photoEditorZoomInput.value);
+  var currentZoomValue = parseInt(photoEditorZoomInput.value, 10);
   var newZoomValue;
 
   if (type === 'in') {
     newZoomValue = currentZoomValue + 25;
   } else if (type === 'out') {
     newZoomValue = currentZoomValue - 25;
-  } else return;
+  } else {
+    return;
+  }
 
   if (newZoomValue > 100) {
     newZoomValue = 100;
@@ -171,7 +173,7 @@ photoEditorPin.addEventListener('mousedown', function (evt) {
   var scaleLineParam = scaleLine.getBoundingClientRect();
   var scaleLineX1 = scaleLineParam.x;
   var scaleLineX2 = scaleLineParam.x + scaleLineWidth;
-  var onePercent = scaleLineWidth/100;
+  var onePercent = scaleLineWidth / 100;
   var startXCoords = evt.clientX;
 
   var onMouseMove = function (moveEvt) {
@@ -218,11 +220,11 @@ photoContainer.addEventListener('click', onPhotoContainerClick);
 function onPhotoContainerClick(evt) {
   var target = evt.target;
 
-  while (target != photoContainer) {
+  while (target !== photoContainer) {
     if (target.classList.contains('picture__link')) {
       var photoId = target.dataset.id;
       var photoData = photosData[photoId];
-      openPhotoViewer(photoData)
+      openPhotoViewer(photoData);
       return;
     }
     target = target.parentNode;
