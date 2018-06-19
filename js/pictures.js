@@ -92,6 +92,7 @@ function closePhotoEditor() {
 
 function openPhotoEditor() {
   photoEditor.classList.remove('hidden');
+  applyEffect();
   photoEditorClose.addEventListener('click', onPhotoEditorCloseClick);
   document.addEventListener('keydown', onPhotoEditorEscPress);
 }
@@ -100,8 +101,7 @@ function resetPhotoEditor() {
   photoEditorForm.reset();
   photoEditor.querySelector('.img-upload__preview').style.transform = '';
   photoEditor.querySelector('.img-upload__preview img').className = '';
-  photoEditor.querySelector('.scale__level').style.width = '100%';
-  photoEditor.querySelector('.scale__value').value = '100';
+  resetSlider();
 }
 
 // Зумирование фото
@@ -149,20 +149,64 @@ var photoEditorEffects = photoEditor.querySelectorAll('.effects__radio ');
 
 photoEditorEffects.forEach(function (effectInput) {
   effectInput.addEventListener('click', function () {
-    applyEffect(effectInput);
+    var effect = effectInput.value;
+    applyEffect(100, effect);
   });
 });
 
-function applyEffect(input) {
-  var effect = input.value;
-  photoEditorImg.className = '';
-  photoEditorImg.classList.add('effects__preview--' + effect);
+function applyEffect(value, effectName) {
+  if (value === undefined) {
+    value = 100;
+  }
+  effectName = effectName || photoEditor.querySelector('.effects__radio:checked').value;
+  var scale = document.querySelector('.img-upload__scale');
+  if (effectName === 'none') {
+    scale.classList.add('hidden');
+  } else {
+    scale.classList.remove('hidden');
+  }
+  if (value === 100) {
+    resetSlider();
+    photoEditorImg.removeAttribute('style');
+    photoEditorImg.className = '';
+    photoEditorImg.classList.add('effects__preview--' + effectName);
+  } else {
+    switch (effectName) {
+      case 'chrome':
+        value /= 100;
+        photoEditorImg.style.filter = 'grayscale(' + value + ')';
+        break;
+      case 'sepia':
+        value /= 100;
+        photoEditorImg.style.filter = 'sepia(' + value + ')';
+        break;
+      case 'marvin':
+        photoEditorImg.style.filter = 'invert(' + value + '%)';
+        break;
+      case 'phobos':
+        value = value * 3 / 100;
+        photoEditorImg.style.filter = 'blur(' + value + 'px)';
+        break;
+      case 'heat':
+        value = value * 3 / 100;
+        photoEditorImg.style.filter = 'brightness(' + value + ')';
+        break;
+      case 'none':
+        break;
+    }
+  }
 }
 
 // Слайдер глубины эффекта
 // =============================================================
 var VALUE_MIN = 0;
 var VALUE_MAX = 100;
+
+function resetSlider() {
+  photoEditor.querySelector('.scale__pin').style.left = '100%';
+  document.querySelector('.scale__level').style.width = '100%';
+  document.querySelector('.scale__value').value = 100;
+}
 
 var photoEditorPin = photoEditor.querySelector('.scale__pin');
 photoEditorPin.addEventListener('mousedown', function (evt) {
@@ -195,6 +239,7 @@ photoEditorPin.addEventListener('mousedown', function (evt) {
       photoEditorPin.style.left = value + '%';
       scaleLevel.style.width = value + '%';
       scaleInput.value = Math.round(value);
+      applyEffect(+value);
     }
   };
 
