@@ -333,3 +333,86 @@ function onPhotoVieverEscPress(evt) {
     closePhotoViewer();
   }
 }
+
+
+// Валидация хэш-тегов
+// ===============================================================
+var hashTagInput = document.querySelector('.text__hashtags');
+var MAX_TAG_LENGHT = 20;
+var ERROR_TOO_MUCH = 'Не больше пяти хэш-тегов';
+var ERROR_TOO_LONG = 'Хэш-тег не может быть длиннее 20 символов';
+var ERROR_TAG_REPEAT = 'Хэш-теги не должны повторяться (#tAg = #tag)';
+var ERROR_NO_TAG = 'Хэш-тег должен начинаться с # и не содержать других #';
+var ERROR_NO_NAME_TAG = 'После # должно быть имя тега';
+
+hashTagInput.addEventListener('change', function (evt) {
+  validateHashTagInput(evt.target);
+});
+
+hashTagInput.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    evt.stopPropagation();
+  }
+});
+
+function isContainNoTag(tagArray) {
+  return tagArray.some(function (currentTag) {
+    return (currentTag.indexOf('#') !== 0) || (currentTag.indexOf('#', 1) !== -1);
+  });
+}
+
+function isContainTooLongTag(tags) {
+  return tags.some(function (currentString) {
+    return (currentString.length > MAX_TAG_LENGHT);
+  });
+}
+
+function isContainRepeatTag(tags) {
+  var obj = {};
+  tags.forEach(function (currentTag) {
+    obj[currentTag] = currentTag;
+  });
+  return (Object.keys(obj).length !== tags.length);
+}
+
+function isContainNoNameTag(tags) {
+  return tags.some(function (currentTag) {
+    return (currentTag.indexOf('#') === 0) && (currentTag.length === 1);
+  });
+}
+
+function makeWordArray(string) {
+  var tags = string.split(/\s+/);
+  tags = tags.filter(function (current) {
+    return current;
+  });
+  return tags;
+}
+
+function validateHashTagInput(input) {
+  var tags = makeWordArray(input.value);
+  input.value = tags.join(' ');
+  tags = tags.map(function (current) {
+    return current.toLowerCase();
+  });
+
+  switch (true) {
+    case (tags.length > 5):
+      input.setCustomValidity(ERROR_TOO_MUCH);
+      break;
+    case (isContainTooLongTag(tags)):
+      input.setCustomValidity(ERROR_TOO_LONG);
+      break;
+    case (isContainNoNameTag(tags)):
+      input.setCustomValidity(ERROR_NO_NAME_TAG);
+      break;
+    case (isContainNoTag(tags)):
+      input.setCustomValidity(ERROR_NO_TAG);
+      break;
+    case (isContainRepeatTag(tags)):
+      input.setCustomValidity(ERROR_TAG_REPEAT);
+      break;
+    default:
+      input.setCustomValidity('');
+  }
+}
