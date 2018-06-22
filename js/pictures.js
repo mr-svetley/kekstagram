@@ -324,7 +324,7 @@ function onPhotoVieverEscPress(evt) {
   }
 }
 
-// Валидация хэш-тегов
+// Валидация хэш-тегов ¯\_(ツ)_/¯
 // ===============================================================
 var hashTagInput = document.querySelector('.text__hashtags');
 var MAX_TAG_LENGHT = 20;
