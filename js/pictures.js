@@ -14,7 +14,6 @@ function generatePhotosLayout(currentPhotosData) {
 
   currentPhotosData.forEach(function (photoData, index) {
     var photo = photoTemplate.cloneNode(true);
-    // photo.setAttribute('data-id', index);
     photo.dataset.id = index;
     photo.querySelector('.picture__img').src = photoData.url;
     photo.querySelector('.picture__stat--comments').textContent = photoData.comments.length;
@@ -207,6 +206,7 @@ function resetSlider() {
 
 var photoEditorPin = photoEditor.querySelector('.scale__pin');
 photoEditorPin.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
   var scaleInput = document.querySelector('.scale__value');
   var scaleLine = document.querySelector('.scale__line');
   var scaleLevel = document.querySelector('.scale__level');
@@ -222,22 +222,20 @@ photoEditorPin.addEventListener('mousedown', function (evt) {
 
     if (moveEvt.clientX >= scaleLineX1 && moveEvt.clientX <= scaleLineX2) {
       var shift = startXCoords - moveEvt.clientX;
-
       startXCoords = moveEvt.clientX;
-
       var value = (photoEditorPin.offsetLeft - shift) / onePercent;
-
-      if (value > VALUE_MAX) {
-        value = VALUE_MAX;
-      } else if (value < VALUE_MIN) {
-        value = VALUE_MIN;
-      }
-
-      photoEditorPin.style.left = value + '%';
-      scaleLevel.style.width = value + '%';
-      scaleInput.value = Math.round(value);
-      applyEffect(Number(value));
     }
+
+    if (moveEvt.clientX > scaleLineX2 || value > VALUE_MAX) {
+      value = VALUE_MAX;
+    } else if (moveEvt.clientX < scaleLineX1 || value < VALUE_MIN) {
+      value = VALUE_MIN;
+    }
+
+    photoEditorPin.style.left = value + '%';
+    scaleLevel.style.width = value + '%';
+    scaleInput.value = Math.round(value);
+    applyEffect(Number(value));
   };
 
   var onMouseUp = function (upEvt) {
