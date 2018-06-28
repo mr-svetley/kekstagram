@@ -3,6 +3,8 @@
 window.editorPopUp = (function () {
   var utils = window.utils;
 
+  // Часть кода, которая отвечает за открытие/закрытие фото-редактора
+  // ============================
   var photoEditorForm = document.querySelector('#upload-select-image');
   var photoEditor = photoEditorForm.querySelector('.img-upload__overlay');
   var photoInput = photoEditorForm.querySelector('#upload-file');
@@ -41,7 +43,8 @@ window.editorPopUp = (function () {
     resetSlider();
   }
 
-  // ======================
+  // Часть кода, которая отвечает за наложение эффекта
+  // ============================
   var photoEditorImage = photoEditor.querySelector('.img-upload__preview img');
   var photoEditorEffects = photoEditor.querySelectorAll('.effects__radio ');
   var MAX_BLUR_VALUE = 3;
@@ -96,6 +99,7 @@ window.editorPopUp = (function () {
     }
   }
 
+  // Часть кода, котора отвечает за работу слайдера
   // ============================
   var VALUE_MIN = 0;
   var VALUE_MAX = 100;
