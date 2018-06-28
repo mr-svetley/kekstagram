@@ -1,6 +1,8 @@
 'use strict';
 
 window.tagValidation = (function () {
+  var utils = window.utils;
+
   var hashTagInput = document.querySelector('.text__hashtags');
   var MAX_TAG_LENGHT = 20;
   var ERROR_TOO_MUCH = 'Не больше пяти хэш-тегов';
@@ -14,7 +16,7 @@ window.tagValidation = (function () {
   });
 
   hashTagInput.addEventListener('keydown', function (evt) {
-    window.util.isEscEvent(evt, evt.stopPropagation);
+    utils.isEscEvent(evt, evt.stopPropagation);
   });
 
   function isContainIncorrectTag(tagArray) {
@@ -72,9 +74,6 @@ window.tagValidation = (function () {
         input.setCustomValidity('');
     }
   }
-  return {
-
-  };
 })();
 
 

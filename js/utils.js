@@ -1,6 +1,6 @@
 'use strict';
 
-window.util = (function () {
+window.utils = (function () {
   var ESC_KEYCODE = 27;
 
   return {
@@ -9,7 +9,7 @@ window.util = (function () {
         action();
       }
     },
-    getRandomInteger: function (max, min) {
+    generareRandomInteger: function (max, min) {
       min = min || 0;
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }

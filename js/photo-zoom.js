@@ -1,9 +1,15 @@
 'use strict';
 window.photoZoom = (function () {
-  var photoEditorZoomMin = window.editorPopUp.photoEditor.querySelector('.resize__control--minus');
-  var photoEditorZoomPlus = window.editorPopUp.photoEditor.querySelector('.resize__control--plus');
-  var photoEditorZoomInput = window.editorPopUp.photoEditor.querySelector('.resize__control--value');
-  var photoEditorImage = window.editorPopUp.photoEditor.querySelector('.img-upload__preview');
+  var editorPopUp = window.editorPopUp;
+
+  var ZOOM_MIN = 25;
+  var ZOOM_MAX = 100;
+  var ZOOM_STEP = 25;
+
+  var photoEditorZoomMin = editorPopUp.photoEditor.querySelector('.resize__control--minus');
+  var photoEditorZoomPlus = editorPopUp.photoEditor.querySelector('.resize__control--plus');
+  var photoEditorZoomInput = editorPopUp.photoEditor.querySelector('.resize__control--value');
+  var photoEditorImage = editorPopUp.photoEditor.querySelector('.img-upload__preview');
 
   photoEditorZoomMin.addEventListener('click', function () {
     zoomPhoto('out');
@@ -14,7 +20,6 @@ window.photoZoom = (function () {
   });
 
   function zoomPhoto(type) {
-    var ZOOM_STEP = 25;
     var currentZoomValue = parseInt(photoEditorZoomInput.value, 10);
     var newZoomValue;
 
@@ -26,14 +31,10 @@ window.photoZoom = (function () {
       throw new TypeError('Invalid "type" argument: ' + type);
     }
 
-    newZoomValue = Math.max(Math.min(newZoomValue, window.slider.VALUE_MAX), window.slider.VALUE_MIN);
+    newZoomValue = Math.max(Math.min(newZoomValue, ZOOM_MAX), ZOOM_MIN);
 
     photoEditorZoomInput.value = newZoomValue + '%';
     photoEditorImage.style.transform = 'scale(' + (newZoomValue / 100) + ')';
   }
-
-  return {
-
-  };
 })();
 

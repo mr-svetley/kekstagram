@@ -1,5 +1,7 @@
 'use strict';
 window.viewerPopUp = (function () {
+  var utils = window.utils;
+
   var photoContainer = document.querySelector('.pictures');
   var photoViever = document.querySelector('.big-picture');
   var photoVieverClose = document.querySelector('#picture-cancel');
@@ -34,7 +36,7 @@ window.viewerPopUp = (function () {
       commentLayout.classList.add('social__comment', 'social__comment--text');
 
       var commentImg = new Image(35, 35);
-      commentImg.src = 'img/avatar-' + window.util.getRandomInteger(6, 1) + '.svg';
+      commentImg.src = 'img/avatar-' + utils.generareRandomInteger(6, 1) + '.svg';
       commentImg.classList.add('social__picture');
       commentImg.alt = 'Аватар комментатора фотографии';
 
@@ -67,11 +69,7 @@ window.viewerPopUp = (function () {
   }
 
   function onPhotoVieverEscPress(evt) {
-    window.util.isEscEvent(evt, closePhotoViewer);
+    utils.isEscEvent(evt, closePhotoViewer);
   }
-
-  return {
-
-  };
 })();
 

@@ -1,6 +1,8 @@
 'use strict';
 
 window.thumb = (function () {
+  var utils = window.utils;
+
   var photosData = generatePhotosData();
   var photosLayout = generatePhotosLayout(photosData);
   document.querySelector('.pictures').appendChild(photosLayout);
@@ -44,11 +46,11 @@ window.thumb = (function () {
     return Array.from({length: number}, function (_currentItem, index) {
       return {
         url: 'photos/' + (index + 1) + '.jpg',
-        likes: window.util.getRandomInteger(200, 15),
-        comments: Array.from({length: window.util.getRandomInteger(2, 1)}, function () {
-          return COMMENTS[window.util.getRandomInteger(COMMENTS.length - 1)];
+        likes: utils.generareRandomInteger(200, 15),
+        comments: Array.from({length: utils.generareRandomInteger(2, 1)}, function () {
+          return COMMENTS[utils.generareRandomInteger(COMMENTS.length - 1)];
         }),
-        description: DESCRIPTIONS[window.util.getRandomInteger(DESCRIPTIONS.length - 1)]
+        description: DESCRIPTIONS[utils.generareRandomInteger(DESCRIPTIONS.length - 1)]
       };
     });
   }
